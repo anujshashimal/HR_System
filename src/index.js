@@ -1,27 +1,23 @@
 const express = require('express')
 require('../src/db/connection')
 const newUser = require('../src/model/users')
+const userrouter = require('../src/routers/user')
+const usertask = require('./model/leave')
+const path = require('path')
 const app = express()
-const port = 3000
+const port = 3000 
+const jwt = require('jsonwebtoken')
 
 app.use(express.json())
+// app.set('views', path.join(__dirname + '../views/'))
 
 app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
 
-//creating a new user
-app.post('/createu', async (req, res) => {
-     try{
-        const user = await new newUser(req.body)
-        user.save()
-     }catch(e) {
-        res.status(404).send()
-     }
-})
+app.use(userrouter)
 
 app.get('/user', (req, res)=> {
-
     newUser.find({}).then((user) => {
         res.send(user)
         console.log(req.body)
@@ -30,13 +26,13 @@ app.get('/user', (req, res)=> {
 })
 
 //fetching specific user details
+
 app.get('/user/:id', (req, res) => {
     const id = req.params.id
     newUser.findById(id).then((user) => {
         if(!user){
             return res.send(404).send
         }
-
         res.send(user)
     }).catch((e) => {
         return res.send(404).send
@@ -57,12 +53,17 @@ app.patch('/user/:id', async (req, res) => {
     }
 })
 
+const myFun = async () => {
+    try{
+    const token = jwt.sign({ _id : 'anuj'},'This is my token' , { expiresIn : '7d'})
+    console.log(token)
 
+    const ver = jwt.verify(token, 'This is my token')
 
+}catch(e){
+    console.log(e)
 
-
-
-
-
-
+}
+}
+myFun()
 

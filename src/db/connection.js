@@ -5,7 +5,6 @@ useNewUrlParser: true,
 useCreateIndex: true,
 useFindAndModify: false,
 useUnifiedTopology: true
-})
-.then(() => console.log("DB is Created!"))
+}).then(() => console.log("DB is Created!"))
 .catch(err => console.log(err));
 
