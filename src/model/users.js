@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('validator')
 const jwt = require('jsonwebtoken')
 
 const userSchema = new mongoose.Schema({
@@ -14,12 +13,7 @@ const userSchema = new mongoose.Schema({
     },email: {
         type : String,
         required: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
-
+     
     },pwd: {
         type : String,
         required: true,
@@ -29,15 +23,15 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required : true
     }
-    }]
-})
+    }]},
+    {
+        timestamps: true
+    })
 
 //methods can access the instances
-
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({_id: user._id }, 'This is my token')
-
+    const token = jwt.sign({ _id: user._id.toString() }, 'thisismynewcourse')
     user.tokens = user.tokens.concat({token})
     await user.save()
     return token
@@ -51,15 +45,14 @@ userSchema.statics.findByCredentials = async (email, pwd) => {
     return loginuser
 }
 
-userSchema.static.findByCredentials =  (email) => {
-    const use = 'sha@gmail.com'
-
-    if(use == email){
-        return use
-    }else{
-        throw new Error('You have no permission to access to the portal!')
-    }
-}
+// userSchema.static.findByCredentials =  (email) => {
+//     const use = 'sha@gmail.com'
+//     if(use == email){
+//         return use
+//     }else{
+//         throw new Error('You have no permission to access to the portal!')
+//     }
+// }
 
 const user = mongoose.model('user', userSchema)
 module.exports = user

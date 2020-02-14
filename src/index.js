@@ -2,10 +2,11 @@ const express = require('express')
 require('../src/db/connection')
 const newUser = require('../src/model/users')
 const userrouter = require('../src/routers/user')
-const usertask = require('./model/leave')
-const path = require('path')
+const userleave = require('../src/routers/leave')
+
 const app = express()
 const port = 3000 
+const auth = require('../src/middleware/authentication')
 const jwt = require('jsonwebtoken')
 
 app.use(express.json())
@@ -16,17 +17,17 @@ app.listen(port, () => {
 })
 
 app.use(userrouter)
+app.use(userleave)
 
-app.get('/user', (req, res)=> {
-    newUser.find({}).then((user) => {
-        res.send(user)
-        console.log(req.body)
-        }).catch((e) => {
-    })
-})
+// app.use((req, res, next) => {
+//     if(req.method == 'GET'){
+
+//         res.send('Get Request are desable!')
+//     }
+//     next()
+// })
 
 //fetching specific user details
-
 app.get('/user/:id', (req, res) => {
     const id = req.params.id
     newUser.findById(id).then((user) => {
@@ -57,13 +58,13 @@ const myFun = async () => {
     try{
     const token = jwt.sign({ _id : 'anuj'},'This is my token' , { expiresIn : '7d'})
     console.log(token)
-
     const ver = jwt.verify(token, 'This is my token')
-
 }catch(e){
     console.log(e)
 
-}
+    }
 }
 myFun()
+
+
 

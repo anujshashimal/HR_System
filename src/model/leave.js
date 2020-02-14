@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const usertaskSchema = new mongoose.Schema({
+const userleaveSchema = new mongoose.Schema({
     lvdate: {
         type : String,
         required: false,
@@ -8,9 +8,14 @@ const usertaskSchema = new mongoose.Schema({
     },lvtype: {
         type : String,
         required: false,
+    },
+    owner: {
+        type : mongoose.Schema.Types.ObjectId,
+        required : true
+
     }
 })
 
-const tasks = mongoose.model('tasks', usertaskSchema)
+const leave = mongoose.model('leave', userleaveSchema)
 
-module.exports = tasks
+module.exports = leave
