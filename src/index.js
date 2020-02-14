@@ -19,13 +19,6 @@ app.listen(port, () => {
 app.use(userrouter)
 app.use(userleave)
 
-// app.use((req, res, next) => {
-//     if(req.method == 'GET'){
-
-//         res.send('Get Request are desable!')
-//     }
-//     next()
-// })
 
 //fetching specific user details
 app.get('/user/:id', (req, res) => {

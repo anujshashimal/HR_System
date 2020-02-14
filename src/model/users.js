@@ -45,14 +45,5 @@ userSchema.statics.findByCredentials = async (email, pwd) => {
     return loginuser
 }
 
-// userSchema.static.findByCredentials =  (email) => {
-//     const use = 'sha@gmail.com'
-//     if(use == email){
-//         return use
-//     }else{
-//         throw new Error('You have no permission to access to the portal!')
-//     }
-// }
-
 const user = mongoose.model('user', userSchema)
 module.exports = user

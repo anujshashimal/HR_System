@@ -16,14 +16,6 @@ const auth = async (req, res, next ) => {
     }
     next()
 
-//     try{
-//         const token = req.header('Authorization').replace('Bearer ', '')
-//         console.log(token)
-
-//     }catch(e){
-//         res.status(401).send({error: 'Please Authentcter'})
-//     }
-// }
 }
 
 module.exports = auth

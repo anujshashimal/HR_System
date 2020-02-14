@@ -1,18 +1,19 @@
 const mongoose = require('mongoose')
+const User = require('../model/users')
 
 const userleaveSchema = new mongoose.Schema({
     lvdate: {
         type : String,
-        required: false,
+        required: true,
         
     },lvtype: {
         type : String,
-        required: false,
+        required: true,
     },
     owner: {
         type : mongoose.Schema.Types.ObjectId,
-        required : true
-
+        required : true,
+        ref: 'User'
     }
 })
 

@@ -6,7 +6,6 @@ const auth = require('../middleware/authentication')
     router.post('/users', auth,  (req, res) =>{
         console.log(req.body)
     })
-
 //creating a new user
 router.post('/userreg', async (req, res) => {
     try{
@@ -56,5 +55,6 @@ router.post('/adminloginn', async (req, res) => {
 router.get('/user', auth, (req, res)=> {
         res.send(req.user)
 })
+
 module.exports = router
 
